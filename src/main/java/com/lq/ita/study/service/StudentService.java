@@ -1,5 +1,8 @@
 package com.lq.ita.study.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +43,15 @@ public class StudentService {
         return StudentDTO.from(innerQuery(id));
     }
 
+    public List<StudentDTO> queryAll() {
+        return innerQueryAll().stream().map(student -> StudentDTO.from(student)).collect(Collectors.toList());
+    }
+
     private Student innerQuery(Integer id) {
         return studentMapper.selectById(id);
+    }
+
+    private List<Student> innerQueryAll() {
+        return studentMapper.selectAll();
     }
 }

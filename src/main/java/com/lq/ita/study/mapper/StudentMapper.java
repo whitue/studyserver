@@ -1,5 +1,7 @@
 package com.lq.ita.study.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,9 @@ public interface StudentMapper {
     @Update("update t_student set name=#{name},age=#{age},address=#{address} where id=#{id}")
     int update(Student student);
 
-    @Select("select * from t_student where id=#{id}")
+    @Select("select id,name,age,address from t_student where id=#{id}")
     Student selectById(Integer id);
+
+    @Select("select id,name,age,address from t_student")
+    List<Student> selectAll();
 }

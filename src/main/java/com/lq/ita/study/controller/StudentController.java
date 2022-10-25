@@ -25,8 +25,8 @@ public class StudentController {
             .data(studentService.add(addStudentReq)).build();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public BaseRsp deRegister(@RequestParam @NotNull Integer id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public BaseRsp deRegister(@NotNull @PathVariable("id") Integer id) {
         return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC).data(studentService.del(id))
             .build();
     }
@@ -37,9 +37,15 @@ public class StudentController {
             .data(studentService.modify(updateStudentReq)).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public BaseRsp list(@RequestParam @NotNull Integer id) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public BaseRsp get(@NotNull @PathVariable("id") Integer id) {
         return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC).data(studentService.query(id))
+            .build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public BaseRsp list() {
+        return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC).data(studentService.queryAll())
             .build();
     }
 }

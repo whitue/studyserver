@@ -4,6 +4,5 @@ spring:
     username: root
     password: mysql123
     url: jdbc:mysql://localhost/study?serverTimezone=Asia/Shanghai
-    #    url: jdbc:mysql://192.168.44.200:3306/study?serverTimezone=Asia/Shanghai
     hikari:
       connection-timeout: 5000
