@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import com.lq.ita.study.audit.AuditOperation;
 import com.lq.ita.study.req.AddStudentReq;
 import com.lq.ita.study.req.UpdateStudentReq;
 import com.lq.ita.study.rsp.BaseRsp;
@@ -20,18 +21,21 @@ public class StudentController {
     private StudentService studentService;
 
     @RequestMapping(method = RequestMethod.POST)
+    @AuditOperation(operation = "addStudent")
     public BaseRsp register(@RequestBody @Valid AddStudentReq addStudentReq) {
         return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC)
             .data(studentService.add(addStudentReq)).build();
     }
 
+    @AuditOperation(operation = "delStudent")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public BaseRsp deRegister(@NotNull @PathVariable("id") Integer id) {
         return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC).data(studentService.del(id))
             .build();
     }
 
-    @RequestMapping(method = RequestMethod.PATCH)
+    @AuditOperation(operation = "updateStudent")
+    @RequestMapping(method = RequestMethod.PUT)
     public BaseRsp modifyInfo(@RequestBody @Valid UpdateStudentReq updateStudentReq) {
         return BaseRsp.builder().code(BaseRsp.SUCCESS_CODE).desc(BaseRsp.SUCCESS_DESC)
             .data(studentService.modify(updateStudentReq)).build();
